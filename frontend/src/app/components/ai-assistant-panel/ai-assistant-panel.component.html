@@ -1,0 +1,29 @@
+<section class="assistant">
+  <h2>Assistant SmartImmo</h2>
+
+  <div class="prompt">
+    <mat-form-field appearance="fill" class="prompt-field">
+      <mat-label>D?crivez votre besoin en logement ou terrain</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="prompt"
+        rows="4"
+        placeholder="Je cherche un appartement meubl? de 3 chambres ? Lom?..."
+      ></textarea>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="send()" [disabled]="isLoading">
+      <mat-icon>send</mat-icon>
+      Envoyer
+    </button>
+  </div>
+
+  <div class="response" *ngIf="isLoading">
+    <mat-progress-spinner mode="indeterminate" diameter="36"></mat-progress-spinner>
+    <p>Analyse de votre requ?te...</p>
+  </div>
+
+  <div class="response" *ngIf="!isLoading && response">
+    <h3>Recommandation</h3>
+    <p>{{ response }}</p>
+  </div>
+</section>

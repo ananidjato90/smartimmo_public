@@ -1,0 +1,21 @@
+<div class="home-grid">
+  <div class="left">
+    <app-search-filters (filterChange)="onFiltersChange($event)"></app-search-filters>
+
+    <section class="properties">
+      <h2>Propri?t?s disponibles</h2>
+      <div class="property-grid">
+        <app-property-card
+          *ngFor="let property of properties"
+          [property]="property"
+          [isFavorite]="favorites.has(property.id)"
+          (favoriteToggle)="toggleFavorite($event)"
+        ></app-property-card>
+      </div>
+    </section>
+  </div>
+
+  <div class="right">
+    <app-ai-assistant-panel #assistant (query)="handleAgentQuery(assistant, $event)"></app-ai-assistant-panel>
+  </div>
+</div>

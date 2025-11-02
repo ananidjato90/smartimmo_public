@@ -1,0 +1,18 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.app-layout {
+  padding: 1.5rem;
+  min-height: calc(100vh - 64px);
+  background-color: #f3f4f6;
+}

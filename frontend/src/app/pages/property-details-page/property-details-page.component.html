@@ -1,0 +1,40 @@
+<ng-container *ngIf="property; else loading">
+  <section class="details">
+    <header>
+      <h1>{{ property.title }}</h1>
+      <p class="location">
+        <mat-icon>location_on</mat-icon>
+        {{ property.city }}
+        <ng-container *ngIf="property.district">- {{ property.district }}</ng-container>
+      </p>
+    </header>
+
+    <div class="gallery">
+      <img
+        *ngFor="let image of property.images"
+        [src]="image.url"
+        [alt]="property.title"
+      />
+    </div>
+
+    <div class="info">
+      <div>
+        <h2>R?sum?</h2>
+        <p>{{ property.description }}</p>
+      </div>
+      <aside>
+        <p><strong>Prix</strong> : {{ property.price | currency:'XOF' }}</p>
+        <p *ngIf="property.area"><strong>Superficie</strong> : {{ property.area }} m?</p>
+        <p *ngIf="property.bedrooms"><strong>Chambres</strong> : {{ property.bedrooms }}</p>
+        <p *ngIf="property.bathrooms"><strong>Salles d'eau</strong> : {{ property.bathrooms }}</p>
+        <p><strong>Type</strong> : {{ property.property_type | titlecase }}</p>
+        <p><strong>Status</strong> : {{ property.status | titlecase }}</p>
+        <p><strong>Publi?</strong> : {{ property.created_at | date }}</p>
+      </aside>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loading>
+  <p>Chargement de la propri?t??</p>
+</ng-template>

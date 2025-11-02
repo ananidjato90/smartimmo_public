@@ -1,0 +1,16 @@
+<section class="favorites">
+  <h1>Mes favoris</h1>
+
+  <div *ngIf="favorites.length; else empty" class="favorite-grid">
+    <app-property-card
+      *ngFor="let fav of favorites"
+      [property]="fav.property"
+      [isFavorite]="true"
+      (favoriteToggle)="removeFavorite(fav.property.id)"
+    ></app-property-card>
+  </div>
+
+  <ng-template #empty>
+    <p>Vous n'avez pas encore ajout? de favoris.</p>
+  </ng-template>
+</section>

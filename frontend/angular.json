@@ -48,11 +48,11 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "smartimmo:build"
+            "buildTarget": "smartimmo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "smartimmo:build:production"
+              "buildTarget": "smartimmo:build:production"
             }
           }
         },
@@ -71,5 +71,8 @@
       }
     }
   },
-  "defaultProject": "smartimmo"
+  "cli": {
+    "analytics": false,
+    "defaultProject": "smartimmo"
+  }
 }

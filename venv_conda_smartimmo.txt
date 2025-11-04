@@ -1,0 +1,7 @@
+POUR ACTIVATER L'ENVIRONNEMENT VIRTUEL smartimmo AVEC CONDA :
+
+# Activer d'abord l'environnement basique de conda (base)
+source ~/miniconda3/bin/activate
+
+# Activer l'environnement virtuel smartimmo
+conda activate smartimmo

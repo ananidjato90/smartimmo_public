@@ -1,21 +1,55 @@
-<div class="home-grid">
-  <div class="left">
-    <app-search-filters (filterChange)="onFiltersChange($event)"></app-search-filters>
+<div class="home-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">🏠 SmartImmo</h1>
+      <nav class="nav">
+        <a href="#" class="nav-link">Accueil</a>
+        <a href="#" class="nav-link">Propriétés</a>
+        <a href="#" class="nav-link">Favoris</a>
+        <a href="#" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <section class="properties">
-      <h2>Propri?t?s disponibles</h2>
-      <div class="property-grid">
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Filters Section -->
+    <section class="filters-section">
+      <app-search-filters
+        [initialFilters]="filters"
+        (filterChange)="onFiltersChange($event)">
+      </app-search-filters>
+    </section>
+
+    <!-- Properties Grid -->
+    <section class="properties-section">
+      <h2 class="section-title">Propriétés disponibles</h2>
+      
+      <div class="properties-grid" *ngIf="properties.length > 0; else noProperties">
         <app-property-card
           *ngFor="let property of properties"
           [property]="property"
           [isFavorite]="favorites.has(property.id)"
-          (favoriteToggle)="toggleFavorite($event)"
-        ></app-property-card>
+          (favoriteToggle)="toggleFavorite($event)">
+        </app-property-card>
       </div>
-    </section>
-  </div>
 
-  <div class="right">
-    <app-ai-assistant-panel #assistant (query)="handleAgentQuery(assistant, $event)"></app-ai-assistant-panel>
-  </div>
+      <ng-template #noProperties>
+        <div class="no-results">
+          <div class="no-results-icon">🔍</div>
+          <h3>Aucune propriété trouvée</h3>
+          <p>Essayez de modifier vos critères de recherche</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <!-- AI Assistant Panel -->
+    <aside class="assistant-panel">
+      <app-ai-assistant-panel
+        #assistant
+        (querySubmitted)="handleAgentQuery(assistant, $event)">
+      </app-ai-assistant-panel>
+    </aside>
+  </main>
 </div>

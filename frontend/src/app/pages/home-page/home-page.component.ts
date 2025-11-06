@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 
 import { Property, PropertyFilters } from '../../models/property';
 import { ApiService } from '../../services/api.service';
@@ -42,7 +43,7 @@ export class HomePageComponent {
         this.properties = properties;
       },
       error: () => {
-        this.snackBar.open('Impossible de charger les propri?t?s', 'Fermer', {
+        this.snackBar.open('Impossible de charger les propriétés', 'Fermer', {
           duration: 3000
         });
       }
@@ -67,26 +68,32 @@ export class HomePageComponent {
 
   toggleFavorite(property: Property): void {
     const isFavorite = this.favorites.has(property.id);
-    const request = isFavorite
-      ? this.api.removeFavorite(property.id)
-      : this.api.addFavorite(property.id);
-
-    request.subscribe({
-      next: () => {
-        if (isFavorite) {
+    
+    if (isFavorite) {
+      this.api.removeFavorite(property.id).subscribe({
+        next: () => {
           this.favorites.delete(property.id);
-          this.snackBar.open('Retir? des favoris', undefined, { duration: 2000 });
-        } else {
-          this.favorites.add(property.id);
-          this.snackBar.open('Ajout? aux favoris', undefined, { duration: 2000 });
+          this.snackBar.open('Retiré des favoris', undefined, { duration: 2000 });
+        },
+        error: () => {
+          this.snackBar.open('Action indisponible. Vérifiez votre session.', 'Fermer', {
+            duration: 3000
+          });
         }
-      },
-      error: () => {
-        this.snackBar.open('Action indisponible. V?rifiez votre session.', 'Fermer', {
-          duration: 3000
-        });
-      }
-    });
+      });
+    } else {
+      this.api.addFavorite(property.id).subscribe({
+        next: () => {
+          this.favorites.add(property.id);
+          this.snackBar.open('Ajouté aux favoris', undefined, { duration: 2000 });
+        },
+        error: () => {
+          this.snackBar.open('Action indisponible. Vérifiez votre session.', 'Fermer', {
+            duration: 3000
+          });
+        }
+      });
+    }
   }
 
   handleAgentQuery(component: AiAssistantPanelComponent, prompt: string): void {

@@ -141,14 +141,14 @@ docker compose up --build
 
 Services exposés :
 
-| Service   | URL                      |
-|-----------|--------------------------|
-| Frontend  | http://localhost:4200    |
-| Backend   | http://localhost:8000    |
-| Swagger   | http://localhost:8000/docs |
+| Service   | URL                         |
+|-----------|-----------------------------|
+| Frontend  | http://localhost:4200       |
+| Backend   | http://localhost:8000       |
+| Swagger   | http://localhost:8000/docs  |
 | Redoc     | http://localhost:8000/redoc |
-| MySQL     | localhost:3306           |
-| Ollama    | http://localhost:11434   |
+| MySQL     | localhost:3306              |
+| Ollama    | http://localhost:11434      |
 
 > **Remarque :** Le service `llm` télécharge automatiquement le modèle `llama3` au premier démarrage. Le téléchargement peut prendre plusieurs minutes selon la connexion.
 
@@ -166,15 +166,15 @@ docker compose exec backend python -m app.seed
 Variables disponibles dans `backend/.env.example` :
 
 ```env
-APP_NAME=Togo Real Estate API
+APP_NAME=Smart Immo API
 ENVIRONMENT=development
 DEBUG=True
 
-MYSQL_USER=realestate
-MYSQL_PASSWORD=realestate
+MYSQL_USER=smartimmo
+MYSQL_PASSWORD=smartimmo
 MYSQL_HOST=db
 MYSQL_PORT=3306
-MYSQL_DATABASE=realestate
+MYSQL_DATABASE=smartimmo
 
 CORS_ALLOWED_ORIGINS=http://localhost:4200,http://127.0.0.1:4200
 
@@ -269,6 +269,16 @@ docker compose exec backend python -m app.seed
 ```bash
 cd backend
 python -m venv .venv && source .venv/bin/activate
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm --version
+nvm install 20
+nvm use 20
+rm -rf node_modules package-lock.json
+npm install
+
+
 pip install -r requirements.txt
 cp .env.example .env
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

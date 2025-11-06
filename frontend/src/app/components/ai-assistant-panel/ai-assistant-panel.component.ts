@@ -1,40 +1,56 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-ai-assistant-panel',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    NgIf,
+    NgFor
+  ],
   templateUrl: './ai-assistant-panel.component.html',
   styleUrls: ['./ai-assistant-panel.component.scss']
 })
 export class AiAssistantPanelComponent {
-  @Output() query = new EventEmitter<string>();
+  @Output() querySubmitted = new EventEmitter<string>();
 
-  prompt = '';
-  isLoading = false;
-  response: string | null = null;
+  message = '';
+  response = '';
+  loading = false;
 
-  send(): void {
-    if (!this.prompt.trim()) {
-      return;
+  examples = [
+    'Appartement 3 chambres à Lomé',
+    'Maison avec jardin à Accra',
+    'Terrain constructible'
+  ];
+
+  onSubmit(): void {
+    if (this.message.trim()) {
+      this.querySubmitted.emit(this.message);
+      this.message = '';
     }
-    this.isLoading = true;
-    this.query.emit(this.prompt.trim());
   }
 
-  setLoading(state: boolean): void {
-    this.isLoading = state;
+  useExample(example: string): void {
+    this.message = example;
   }
 
-  setResponse(value: string): void {
-    this.response = value;
-    this.isLoading = false;
-    this.prompt = '';
+  setLoading(loading: boolean): void {
+    this.loading = loading;
+  }
+
+  setResponse(response: string): void {
+    this.response = response;
+    this.loading = false;
   }
 }

@@ -2,10 +2,10 @@
 
 @include mat.core();
 
-$primary-palette: mat.define-palette(mat.$indigo-palette, 500);
-$accent-palette: mat.define-palette(mat.$orange-palette, 500, 300, 700);
+$primary-palette: mat.m2-define-palette(mat.$m2-indigo-palette, 500);
+$accent-palette: mat.m2-define-palette(mat.$m2-orange-palette, 500, 300, 700);
 
-$theme: mat.define-light-theme(
+$theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $primary-palette,

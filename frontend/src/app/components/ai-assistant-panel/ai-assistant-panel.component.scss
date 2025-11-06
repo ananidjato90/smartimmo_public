@@ -1,30 +1,120 @@
-.assistant {
-  background-color: #ffffff;
+.assistant-container {
+  background: white;
+  border-radius: 12px;
   padding: 1.5rem;
-  border-radius: 18px;
-  box-shadow: 0 20px 45px rgba(30, 41, 59, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.prompt {
+.assistant-header {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-.prompt-field {
-  flex: 1 1 320px;
-}
-
-.response {
-  display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
 }
 
-.response p {
-  margin: 0;
+.assistant-icon {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  color: #3b82f6;
+}
+
+.assistant-description {
+  margin-bottom: 1.5rem;
+  
+  p {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+.assistant-form {
+  margin-bottom: 1.5rem;
+}
+
+.message-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.send-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: 500;
+  
+  mat-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+.assistant-response {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  
+  mat-icon {
+    color: #f59e0b;
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  span {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 0.875rem;
+  }
+}
+
+.response-content {
+  color: #475569;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.assistant-examples {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+}
+
+.examples-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.75rem 0;
+}
+
+.example-btn {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  font-size: 0.875rem;
+  justify-content: flex-start;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+  }
 }

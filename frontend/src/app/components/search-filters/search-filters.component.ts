@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { TitleCasePipe, NgFor } from '@angular/common';
 
 import { PropertyFilters, PropertyType, PropertyStatus } from '../../models/property';
 
@@ -15,7 +17,10 @@ import { PropertyFilters, PropertyType, PropertyStatus } from '../../models/prop
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
+    TitleCasePipe,
+    NgFor
   ],
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.scss']
@@ -30,14 +35,14 @@ export class SearchFiltersComponent {
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.form = this.fb.group<PropertyFilters>({
-      city: this.fb.control(''),
-      property_type: this.fb.control<PropertyType | ''>(''),
-      status: this.fb.control<PropertyStatus | ''>(''),
-      min_price: this.fb.control<number | null>(null),
-      max_price: this.fb.control<number | null>(null),
-      bedrooms: this.fb.control<number | null>(null),
-      bathrooms: this.fb.control<number | null>(null)
+    this.form = this.fb.group({
+      city: [''],
+      property_type: [''],
+      status: [''],
+      min_price: [null],
+      max_price: [null],
+      bedrooms: [null],
+      bathrooms: [null]
     });
   }
 
@@ -47,11 +52,22 @@ export class SearchFiltersComponent {
     }
   }
 
+  getStatusLabel(status: PropertyStatus): string {
+    const labels: Record<PropertyStatus, string> = {
+      'available': 'Disponible',
+      'pending': 'En attente',
+      'sold': 'Vendu',
+      'rented': 'Loué'
+    };
+    return labels[status] || status;
+  }
+
   submit(): void {
+    const formValue = this.form.getRawValue();
     this.filterChange.emit({
-      ...this.form.getRawValue(),
-      property_type: this.form.value.property_type || undefined,
-      status: this.form.value.status || undefined
+      ...formValue,
+      property_type: formValue.property_type || undefined,
+      status: formValue.status || undefined
     });
   }
 

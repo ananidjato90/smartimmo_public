@@ -1,26 +1,61 @@
 <mat-card class="property-card">
-  <img mat-card-image [src]="primaryImage" [alt]="property.title" />
-  <mat-card-header>
-    <mat-card-title>{{ property.title }}</mat-card-title>
-    <mat-card-subtitle>
-      {{ property.city }}
-      <ng-container *ngIf="property.district">- {{ property.district }}</ng-container>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p class="price">{{ property.price | currency:'XOF' }}</p>
-    <p class="meta">
-      {{ property.property_type | titlecase }} ? {{ property.status | titlecase }}
-    </p>
-    <p class="meta" *ngIf="property.bedrooms">
-      Chambres : {{ property.bedrooms }} | Salles d'eau : {{ property.bathrooms || 0 }}
-    </p>
-    <p class="description">{{ property.description | slice:0:150 }}...</p>
-  </mat-card-content>
-  <mat-card-actions>
-    <a mat-button color="primary" [routerLink]="['/properties', property.id]">Voir plus</a>
-    <button mat-stroked-button color="accent" (click)="toggleFavorite()">
-      {{ isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
+  <div class="card-image-container">
+    <img [src]="primaryImage" [alt]="property.title" class="card-image">
+    <div class="card-badge">
+      <span class="badge-type">{{ getPropertyTypeLabel(property.property_type) }}</span>
+      <span class="badge-status" [class]="'status-' + property.status">
+        {{ getStatusLabel(property.status) }}
+      </span>
+    </div>
+    <button 
+      mat-icon-button 
+      class="favorite-btn" 
+      [class.is-favorite]="isFavorite"
+      (click)="toggleFavorite()"
+      aria-label="Ajouter aux favoris">
+      <mat-icon>{{ isFavorite ? 'favorite' : 'favorite_border' }}</mat-icon>
     </button>
-  </mat-card-actions>
+  </div>
+
+  <mat-card-content class="card-content">
+    <h3 class="property-title">{{ property.title }}</h3>
+    
+    <p class="property-description">
+      {{ property.description | slice:0:120 }}{{ property.description.length > 120 ? '...' : '' }}
+    </p>
+
+    <div class="property-details">
+      <div class="detail-item" *ngIf="property.bedrooms">
+        <mat-icon>bed</mat-icon>
+        <span>{{ property.bedrooms }} ch.</span>
+      </div>
+      <div class="detail-item" *ngIf="property.bathrooms">
+        <mat-icon>bathtub</mat-icon>
+        <span>{{ property.bathrooms }} sdb</span>
+      </div>
+      <div class="detail-item" *ngIf="property.area">
+        <mat-icon>square_foot</mat-icon>
+        <span>{{ property.area }} m²</span>
+      </div>
+    </div>
+
+    <div class="property-location">
+      <mat-icon>location_on</mat-icon>
+      <span>{{ property.city }}</span>
+    </div>
+
+    <div class="property-footer">
+      <div class="price">
+        <span class="price-value">{{ property.price | currency:'XOF':'symbol':'1.0-0' }}</span>
+        <span class="price-label" *ngIf="property.status === 'rented'">/mois</span>
+      </div>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        [routerLink]="['/properties', property.id]"
+        class="details-btn">
+        Voir détails
+      </button>
+    </div>
+  </mat-card-content>
 </mat-card>

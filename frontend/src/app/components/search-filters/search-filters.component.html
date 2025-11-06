@@ -1,51 +1,77 @@
-<form class="filters" [formGroup]="form" (ngSubmit)="submit()">
-  <mat-form-field appearance="outline">
-    <mat-label>Ville</mat-label>
-    <input matInput formControlName="city" placeholder="Lom?" />
-  </mat-form-field>
+<form [formGroup]="form" (ngSubmit)="submit()" class="filters-form">
+  <div class="form-header">
+    <h3>🔍 Rechercher un bien</h3>
+  </div>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Type</mat-label>
-    <mat-select formControlName="property_type">
-      <mat-option value="">Tous</mat-option>
-      <mat-option *ngFor="let type of propertyTypes" [value]="type">
-        {{ type | titlecase }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="form-grid">
+    <!-- Ville -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Ville</mat-label>
+      <input matInput formControlName="city" placeholder="Lomé, Accra...">
+      <mat-icon matPrefix>location_on</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Status</mat-label>
-    <mat-select formControlName="status">
-      <mat-option value="">Tous</mat-option>
-      <mat-option *ngFor="let status of propertyStatuses" [value]="status">
-        {{ status | titlecase }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <!-- Type de propriété -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="property_type">
+        <mat-option value="">Tous</mat-option>
+        <mat-option *ngFor="let type of propertyTypes" [value]="type">
+          {{ type | titlecase }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matPrefix>home</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Budget min</mat-label>
-    <input matInput type="number" formControlName="min_price" />
-  </mat-form-field>
+    <!-- Status -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Statut</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="">Tous</mat-option>
+        <mat-option *ngFor="let status of propertyStatuses" [value]="status">
+          {{ getStatusLabel(status) }}
+        </mat-option>
+      </mat-select>
+      <mat-icon matPrefix>info</mat-icon>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Budget max</mat-label>
-    <input matInput type="number" formControlName="max_price" />
-  </mat-form-field>
+    <!-- Budget min -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Budget min</mat-label>
+      <input matInput type="number" formControlName="min_price" placeholder="20000">
+      <span matPrefix>FCFA&nbsp;</span>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Min. chambres</mat-label>
-    <input matInput type="number" formControlName="bedrooms" />
-  </mat-form-field>
+    <!-- Budget max -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Budget max</mat-label>
+      <input matInput type="number" formControlName="max_price" placeholder="80000">
+      <span matPrefix>FCFA&nbsp;</span>
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Min. salles d'eau</mat-label>
-    <input matInput type="number" formControlName="bathrooms" />
-  </mat-form-field>
+    <!-- Chambres -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Min. chambres</mat-label>
+      <input matInput type="number" formControlName="bedrooms" min="0">
+      <mat-icon matPrefix>bed</mat-icon>
+    </mat-form-field>
 
-  <div class="actions">
-    <button mat-flat-button color="primary" type="submit">Rechercher</button>
-    <button mat-button type="button" (click)="reset()">R?initialiser</button>
+    <!-- Salles de bain -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Min. salles d'eau</mat-label>
+      <input matInput type="number" formControlName="bathrooms" min="0">
+      <mat-icon matPrefix>bathtub</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit" class="submit-btn">
+      <mat-icon>search</mat-icon>
+      Rechercher
+    </button>
+    <button mat-button type="button" (click)="reset()" class="reset-btn">
+      <mat-icon>refresh</mat-icon>
+      Réinitialiser
+    </button>
   </div>
 </form>

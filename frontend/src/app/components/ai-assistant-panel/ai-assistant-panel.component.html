@@ -1,29 +1,55 @@
-<section class="assistant">
-  <h2>Assistant SmartImmo</h2>
+<div class="assistant-container">
+  <div class="assistant-header">
+    <mat-icon class="assistant-icon">smart_toy</mat-icon>
+    <h3>Assistant SmartImmo</h3>
+  </div>
 
-  <div class="prompt">
-    <mat-form-field appearance="fill" class="prompt-field">
-      <mat-label>D?crivez votre besoin en logement ou terrain</mat-label>
-      <textarea
-        matInput
-        [(ngModel)]="prompt"
+  <div class="assistant-description">
+    <p>Décrivez votre besoin en logement ou terrain</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" class="assistant-form">
+    <mat-form-field appearance="outline" class="message-field">
+      <mat-label>Votre message</mat-label>
+      <textarea 
+        matInput 
+        [(ngModel)]="message" 
+        name="message"
+        placeholder="Ex: Je cherche un appartement 2 chambres à Lomé..."
         rows="4"
-        placeholder="Je cherche un appartement meubl? de 3 chambres ? Lom?..."
-      ></textarea>
+        [disabled]="loading"></textarea>
     </mat-form-field>
-    <button mat-flat-button color="primary" (click)="send()" [disabled]="isLoading">
-      <mat-icon>send</mat-icon>
-      Envoyer
+
+    <button 
+      mat-raised-button 
+      color="primary" 
+      type="submit" 
+      [disabled]="!message || loading"
+      class="send-btn">
+      <mat-icon>{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
+      {{ loading ? 'Recherche...' : 'Envoyer' }}
+    </button>
+  </form>
+
+  <div class="assistant-response" *ngIf="response">
+    <div class="response-header">
+      <mat-icon>lightbulb</mat-icon>
+      <span>Suggestion</span>
+    </div>
+    <div class="response-content">
+      {{ response }}
+    </div>
+  </div>
+
+  <div class="assistant-examples">
+    <p class="examples-title">Exemples de questions:</p>
+    <button 
+      mat-stroked-button 
+      *ngFor="let example of examples"
+      (click)="useExample(example)"
+      [disabled]="loading"
+      class="example-btn">
+      {{ example }}
     </button>
   </div>
-
-  <div class="response" *ngIf="isLoading">
-    <mat-progress-spinner mode="indeterminate" diameter="36"></mat-progress-spinner>
-    <p>Analyse de votre requ?te...</p>
-  </div>
-
-  <div class="response" *ngIf="!isLoading && response">
-    <h3>Recommandation</h3>
-    <p>{{ response }}</p>
-  </div>
-</section>
+</div>
